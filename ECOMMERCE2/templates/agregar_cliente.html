@@ -1,0 +1,35 @@
+{%extends "base.html"%}
+
+{%block content%}
+
+<form action="/cliente/agregar" method="POST">
+  <div class="form-group">
+    <label for="exampleInputEmail1">Nombre</label>
+    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="nombre">
+  </div>
+  <div class="form-group">
+    <label for="exampleInputPassword1">Correo</label>
+    <input type="email" class="form-control" id="exampleInputPassword1" name="correo">
+  </div>
+  <div class="form-group">
+    <label for="exampleInputPassword1">Numero de contacto</label>
+    <input type="text" class="form-control" id="exampleInputPassword1" name="numero">
+  </div>
+    <div class="form-group">
+        <label for="exampleInputPassword1">Direccion</label>
+        <span class="input-group-text" id="basic-addon1">C.P:</span>
+
+        <input type="text" class="form-control" id="exampleInputPassword1" name="cp">
+        <span class="input-group-text" id="basic-addon1">Cuidad:</span>
+
+        <input type="text" class="form-control" id="exampleInputPassword1" name="cuidad">
+        <span class="input-group-text" id="basic-addon1">Calle:</span>
+        <input type="text" class="form-control" id="exampleInputPassword1" name="calle">
+        <span class="input-group-text" id="basic-addon1">numero_depto:</span>
+        <input type="text" class="form-control" id="exampleInputPassword1" name="numero_depto">
+    </div>
+    
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+{%endblock%}

@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrito de Compras</title>
+    <style>
+        :root {
+  --color-black: #000000;
+  --color-white: #ffffff;
+  --color-gray-100: #f5f5f5;
+  --color-gray-200: #e5e5e5;
+  --color-gray-300: #d4d4d4;
+  --color-gray-400: #a3a3a3;
+  --color-gray-500: #737373;
+  --color-gray-600: #525252;
+  --color-gray-700: #404040;
+  --color-gray-800: #262626;
+  --color-gray-900: #171717;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Inter", sans-serif;
+  background-color: var(--color-gray-100);
+  color: var(--color-gray-900);
+  line-height: 1.6;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+header {
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--color-black);
+  margin-bottom: 1rem;
+}
+
+/* Cart Styles */
+.cart {
+  background-color: var(--color-white);
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.cart-header {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  padding: 1.5rem;
+  background-color: var(--color-black);
+  color: var(--color-white);
+  font-weight: 600;
+}
+
+.cart-items {
+  list-style: none;
+}
+
+.cart-item {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  padding: 1.5rem;
+  border-bottom: 1px solid var(--color-gray-200);
+}
+
+.cart-item:last-child {
+  border-bottom: none;
+}
+
+.item-name {
+  font-weight: 500;
+}
+
+.item-quantity,
+.item-price {
+  text-align: center;
+}
+
+.cart-total {
+  display: flex;
+  justify-content: space-between;
+  padding: 1.5rem;
+  background-color: var(--color-gray-100);
+  font-weight: 700;
+  font-size: 1.25rem;
+}
+
+.cart-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  padding: 1.5rem;
+  background-color: var(--color-white);
+}
+
+/* Empty Cart */
+.empty-cart {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 2rem;
+  background-color: var(--color-white);
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.empty-cart svg {
+  margin-bottom: 1.5rem;
+  color: var(--color-gray-400);
+}
+
+.empty-cart p {
+  font-size: 1.25rem;
+  margin-bottom: 2rem;
+  color: var(--color-gray-600);
+}
+
+/* Buttons */
+.btn {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 4px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-primary {
+  background-color: var(--color-black);
+  color: var(--color-white);
+}
+
+.btn-primary:hover {
+  background-color: var(--color-gray-800);
+}
+
+.btn-secondary {
+  background-color: var(--color-white);
+  color: var(--color-black);
+  border: 1px solid var(--color-gray-300);
+}
+
+.btn-secondary:hover {
+  background-color: var(--color-gray-100);
+}
+
+/* Footer */
+footer {
+  margin-top: 3rem;
+  text-align: center;
+  color: var(--color-gray-500);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .cart-header {
+    display: none;
+  }
+
+  .cart-item {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
+
+  .item-name,
+  .item-quantity,
+  .item-price {
+    text-align: left;
+  }
+
+  .item-name::before {
+    content: "Producto: ";
+    font-weight: 600;
+  }
+
+  .item-quantity::before {
+    content: "Cantidad: ";
+    font-weight: 600;
+  }
+
+  .item-price::before {
+    content: "Precio: ";
+    font-weight: 600;
+  }
+
+  .cart-actions {
+    flex-direction: column;
+  }
+
+  .btn {
+    width: 100%;
+  }
+}
+
+    </style>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Carrito de Compras</h1>
+        </header>
+        
+        <main>
+            {% if carrito %}
+                <div class="cart">
+                    <div class="cart-header">
+                        <span>Producto</span>
+                        <span>Cantidad</span>
+                        <span>Precio</span>
+                    </div>
+                    
+                    <ul class="cart-items">
+                        {% for item in carrito %}
+                            <li class="cart-item">
+                                <div class="item-name">{{ item.nombre }}</div>
+                                <div class="item-quantity">{{ item.cantidad }}</div>
+                                <div class="item-price">${{ item.precio }}</div>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                    
+                    <div class="cart-total">
+                        <span>Total</span>
+                        <span>${{ carrito | sum(attribute='precio') }}</span>
+                    </div>
+                    
+                    <div class="cart-actions">
+                        <button class="btn btn-primary">Proceder al pago</button>
+                        <button class="btn btn-secondary">Seguir comprando</button>
+                    </div>
+                </div>
+            {% else %}
+                <div class="empty-cart">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="8" cy="21" r="1"></circle>
+                        <circle cx="19" cy="21" r="1"></circle>
+                        <path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"></path>
+                    </svg>
+                    <p>El carrito está vacío.</p>
+                    <button class="btn btn-primary">Explorar productos</button>
+                </div>
+            {% endif %}
+        </main>
+        
+        <footer>
+            <p>&copy; 2025 Tu Tienda. Todos los derechos reservados.</p>
+        </footer>
+    </div>
+</body>
+</html>

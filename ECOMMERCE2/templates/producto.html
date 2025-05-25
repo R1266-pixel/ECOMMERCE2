@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+    <title>Gestión de Productos</title>
+    <style>
+        body {
+            background-color: #f8f9fa; /* Fondo claro */
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            margin-top: 50px;
+        }
+        .card {
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+        }
+        .table-container {
+            margin-top: 20px;
+        }
+        .form-container {
+            margin-top: 30px;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Título de la Página -->
+        <h1 class="text-center my-4">Gestión de Productos</h1>
+         <!-- BUSQUEDA-->
+         <form method="get" action="/producto" class="mb-3 d-flex" role="search">
+            <input type="text" name="busqueda" class="form-control me-2" placeholder="Buscar producto...">
+            <button type="submit" class="btn btn-primary">Buscar</button>
+        </form>
+        
+        </form>
+        <!-- Tabla de Productos -->
+        <div class="table-container">
+            <h3 class="mb-3">Lista de Productos</h3>
+            <table class="table table-striped">
+                <thead class="table-dark">
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Precio</th>
+                        <th>Color</th>
+                        <th>Categoría</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if productos %}
+            {% for producto in productos %}
+            <tr>
+                <td>{{ producto.ID }}</td>
+                <td>{{ producto.NOMBRE }}</td>
+                <td>${{ producto.PRECIO }}</td>
+                <td>{{ producto.COLOR }}</td>
+                <td>{{ producto.CATEGORIA }}</td>
+
+                            <td>
+                                <!-- Botón para eliminar el producto -->
+                                <a href="eliminar_producto/{{producto.ID}}" class="btn-danger">Eliminar</a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    {% else %}
+                        <tr>
+                            <td colspan="6" class="text-center">No hay productos registrados.</td>
+                        </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Formulario para Agregar Productos -->
+        <div class="form-container">
+            <h3 class="mb-3">Agregar Nuevo Producto</h3>
+            <form action="/producto" method="POST">
+                <div class="mb-3">
+                    <label for="nombre" class="form-label">Nombre del Producto</label>
+                    <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Ej. Laptop" required>
+                </div>
+                <div class="mb-3">
+                    <label for="precio" class="form-label">Precio</label>
+                    <input type="number" class="form-control" id="precio" name="precio" placeholder="Ej. 1200" required>
+                </div>
+                <div class="mb-3">
+                    <label for="color" class="form-label">Color</label>
+                    <input type="text" class="form-control" id="color" name="color" placeholder="Ej. Negro" required>
+                </div>
+                <div class="mb-3">
+                    <label for="categoria" class="form-label">Categoría</label>
+                    <input type="text" class="form-control" id="categoria" name="categoria" placeholder="Ej. Electrónica" required>
+                </div>
+                <button type="submit" class="btn btn-primary w-100">Agregar Producto</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+</body>
+</html>
